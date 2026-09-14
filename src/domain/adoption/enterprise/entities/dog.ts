@@ -8,6 +8,7 @@ import type { IndependenceLevels } from "./enums/dog-independence-levels.js";
 import type { SuitableEnvironments } from "./enums/dog-suitable-environments.js";
 
 interface DogProps {
+  organizationId: UniqueEntityId;
   name: string;
   about: string;
   age: number;
@@ -20,6 +21,46 @@ interface DogProps {
 }
 
 export class Dog extends Entity<DogProps> {
+  get organizationId() {
+    return this.props.organizationId;
+  }
+
+  get name() {
+    return this.props.name;
+  }
+
+  get about() {
+    return this.props.about;
+  }
+
+  get age() {
+    return this.props.age;
+  }
+
+  get dogSize() {
+    return this.props.dogSize;
+  }
+
+  get energyLevel() {
+    return this.props.energyLevel;
+  }
+
+  get independencyLevel() {
+    return this.props.independenceLevel;
+  }
+
+  get suitableEnvironment() {
+    return this.props.suitableEnvironment;
+  }
+
+  get photos() {
+    return this.props.photos;
+  }
+
+  get adoptionRequirements() {
+    return this.props.adoptionRequirements;
+  }
+
   static create(props: DogProps, id?: UniqueEntityId) {
     const dog = new Dog(props, id);
 
