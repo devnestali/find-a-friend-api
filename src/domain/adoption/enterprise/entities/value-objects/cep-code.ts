@@ -1,3 +1,5 @@
+import { NotValid } from "./errors/not-valid.js";
+
 export class CepCode {
   public readonly value: string;
 
@@ -5,9 +7,9 @@ export class CepCode {
     this.value = value;
   }
 
-  static create(cep: string): CepCode {
+  static create(cep: string): CepCode | NotValid {
     if (!this.validate(cep)) {
-      throw new Error("CEP must have 8 digits.");
+      return new NotValid("cep", 8);
     }
 
     return new CepCode(cep);

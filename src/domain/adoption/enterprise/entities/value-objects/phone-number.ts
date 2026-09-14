@@ -1,3 +1,5 @@
+import { NotValid } from "./errors/not-valid.js";
+
 export class PhoneNumber {
   public readonly value: string;
 
@@ -5,9 +7,9 @@ export class PhoneNumber {
     this.value = value;
   }
 
-  static create(phone: string) {
+  static create(phone: string): PhoneNumber | NotValid {
     if (!this.validate(phone)) {
-      throw new Error("Phone number must have 11 digits.");
+      return new NotValid("phone", 11);
     }
 
     return new PhoneNumber(phone);
