@@ -1,0 +1,5 @@
+export enum SuitableEnvironments {
+  HOUSE = "HOUSE",
+  APARTMENT = "APARTMENT",
+  SPACIOUS_ENVIRONMENT = "SPACIOUS_ENVIRONMENT",
+}
