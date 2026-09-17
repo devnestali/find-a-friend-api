@@ -1,6 +1,4 @@
 import { InMemoryOrganizationsRepository } from "../../../../../test/repositories/in-memory-organizations.repository.js";
-import { Organization } from "../../enterprise/entities/organization.js";
-import { CepCode } from "../../enterprise/entities/value-objects/cep-code.js";
 import { NotValid } from "../../enterprise/entities/value-objects/errors/not-valid.js";
 import { PasswordDoesNotMatch } from "../../enterprise/entities/value-objects/errors/password-does-not-match.js";
 import { CreateOrganizationUseCase } from "./create-organization.js";
@@ -32,17 +30,19 @@ describe("Create Organization Use Case", () => {
   });
 
   it("should not be able create a organization with different passwords", async () => {
-    await expect(
-      sut.execute({
-        responsiblePersonName: "John Doe",
-        email: "johndoe@example.com",
-        cep: "12345678",
-        address: "First Street, 123",
-        phoneNumber: "11111111111",
-        password: "123456",
-        confirmPassword: "1234567",
-      }),
-    ).rejects.toBeInstanceOf(PasswordDoesNotMatch);
+    const result = await sut.execute({
+      responsiblePersonName: "John Doe",
+      email: "johndoe@example.com",
+      cep: "12345678",
+      address: "First Street, 123",
+      phoneNumber: "11111111111",
+      password: "123456",
+      confirmPassword: "1234567",
+    });
+
+    expect(result).toBeInstanceOf(PasswordDoesNotMatch);
+
+    expect(inMemoryOrganizationsRepository.items).toHaveLength(0);
   });
 
   it("should not be able create a organization with invalid CEP format", async () => {

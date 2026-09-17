@@ -45,7 +45,7 @@ export class Organization extends Entity<OrganizationProps> {
 
   static create(props: OrganizationProps, id?: UniqueEntityId) {
     if (props.password !== props.confirmPassword) {
-      throw new PasswordDoesNotMatch();
+      return new PasswordDoesNotMatch();
     }
 
     const organization = new Organization(props, id);

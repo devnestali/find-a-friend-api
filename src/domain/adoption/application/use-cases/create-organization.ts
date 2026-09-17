@@ -1,6 +1,7 @@
 import { Organization } from "../../enterprise/entities/organization.js";
 import { CepCode } from "../../enterprise/entities/value-objects/cep-code.js";
 import { NotValid } from "../../enterprise/entities/value-objects/errors/not-valid.js";
+import { PasswordDoesNotMatch } from "../../enterprise/entities/value-objects/errors/password-does-not-match.js";
 import { PhoneNumber } from "../../enterprise/entities/value-objects/phone-number.js";
 import type { OrganizationsRepository } from "../repositories/organization.repository.js";
 
@@ -27,7 +28,7 @@ export class CreateOrganizationUseCase {
     phoneNumber,
     password,
     confirmPassword,
-  }: CreateOrganizationUseCaseRequest) {
+  }: CreateOrganizationUseCaseRequest): Promise<CreateOrganizationUseCaseResponse> {
     const cepCode = CepCode.create(cep);
 
     if (cepCode instanceof NotValid) {
@@ -49,6 +50,10 @@ export class CreateOrganizationUseCase {
       password,
       confirmPassword,
     });
+
+    if (organization instanceof PasswordDoesNotMatch) {
+      return organization;
+    }
 
     await this.organizationRepository.create(organization);
 
