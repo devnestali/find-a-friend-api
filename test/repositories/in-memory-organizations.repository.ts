@@ -1,0 +1,22 @@
+import type { OrganizationsRepository } from "@/domain/adoption/application/repositories/organization.repository.js";
+import type { Organization } from "@/domain/adoption/enterprise/entities/organization.js";
+
+export class InMemoryOrganizationsRepository implements OrganizationsRepository {
+  public items: Organization[] = [];
+
+  async create(organization: Organization) {
+    this.items.push(organization);
+  }
+
+  async delete(organization: Organization) {
+    throw new Error("Method not implemented.");
+  }
+
+  async save(organization: Organization) {
+    throw new Error("Method not implemented.");
+  }
+
+  async findById(id: string) {
+    return null;
+  }
+}
