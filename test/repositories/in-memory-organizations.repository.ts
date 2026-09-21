@@ -4,7 +4,7 @@ import type { Organization } from "@/domain/adoption/enterprise/entities/organiz
 export class InMemoryOrganizationsRepository implements OrganizationsRepository {
   public items: Organization[] = [];
 
-  async create(organization: Organization) {
+  async create(organization: Organization): Promise<void> {
     this.items.push(organization);
   }
 
@@ -16,7 +16,11 @@ export class InMemoryOrganizationsRepository implements OrganizationsRepository 
     throw new Error("Method not implemented.");
   }
 
-  async findById(id: string) {
-    return null;
+  async findById(id: string): Promise<Organization | null> {
+    const item = this.items.find((item) => item.id.toString() === id);
+
+    if (!item) return null;
+
+    return item;
   }
 }

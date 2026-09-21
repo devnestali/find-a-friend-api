@@ -8,9 +8,9 @@ import type { IndependenceLevels } from "./enums/dog-independence-levels.js";
 import type { SuitableEnvironments } from "./enums/dog-suitable-environments.js";
 
 interface DogProps {
-  organizationId: UniqueEntityId;
   name: string;
   about: string;
+  organizationId: UniqueEntityId;
   age: number;
   dogSize: DogSizeParams;
   energyLevel: EnergyLevels;

@@ -4,7 +4,7 @@ import type { PhoneNumber } from "./value-objects/phone-number.js";
 import type { UniqueEntityId } from "@/core/entities/unique-entity-id.js";
 import { PasswordDoesNotMatch } from "./value-objects/errors/password-does-not-match.js";
 
-interface OrganizationProps {
+export interface OrganizationProps {
   responsiblePersonName: string;
   email: string;
   cep: CepCode;
@@ -44,10 +44,6 @@ export class Organization extends Entity<OrganizationProps> {
   }
 
   static create(props: OrganizationProps, id?: UniqueEntityId) {
-    if (props.password !== props.confirmPassword) {
-      return new PasswordDoesNotMatch();
-    }
-
     const organization = new Organization(props, id);
 
     return organization;
