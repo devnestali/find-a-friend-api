@@ -1,7 +1,7 @@
 import { Organization } from "../../enterprise/entities/organization.js";
 import { CepCode } from "../../enterprise/entities/value-objects/cep-code.js";
 import { NotValid } from "../../enterprise/entities/value-objects/errors/not-valid.js";
-import { PasswordDoesNotMatch } from "../../enterprise/entities/value-objects/errors/password-does-not-match.js";
+import { PasswordDoesNotMatch } from "./errors/password-does-not-match.js";
 import { PhoneNumber } from "../../enterprise/entities/value-objects/phone-number.js";
 import type { OrganizationsRepository } from "../repositories/organization.repository.js";
 

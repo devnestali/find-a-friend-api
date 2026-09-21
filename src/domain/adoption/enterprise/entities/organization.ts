@@ -2,7 +2,6 @@ import { Entity } from "@/core/entities/entity.js";
 import type { CepCode } from "./value-objects/cep-code.js";
 import type { PhoneNumber } from "./value-objects/phone-number.js";
 import type { UniqueEntityId } from "@/core/entities/unique-entity-id.js";
-import { PasswordDoesNotMatch } from "./value-objects/errors/password-does-not-match.js";
 
 export interface OrganizationProps {
   responsiblePersonName: string;

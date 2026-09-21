@@ -1,6 +1,6 @@
 import { InMemoryOrganizationsRepository } from "../../../../../test/repositories/in-memory-organizations.repository.js";
 import { NotValid } from "../../enterprise/entities/value-objects/errors/not-valid.js";
-import { PasswordDoesNotMatch } from "../../enterprise/entities/value-objects/errors/password-does-not-match.js";
+import { PasswordDoesNotMatch } from "./errors/password-does-not-match.js";
 import { CreateOrganizationUseCase } from "./create-organization.js";
 
 let sut: CreateOrganizationUseCase;

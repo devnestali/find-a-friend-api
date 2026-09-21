@@ -8,14 +8,6 @@ export class InMemoryOrganizationsRepository implements OrganizationsRepository 
     this.items.push(organization);
   }
 
-  async delete(organization: Organization) {
-    throw new Error("Method not implemented.");
-  }
-
-  async save(organization: Organization) {
-    throw new Error("Method not implemented.");
-  }
-
   async findById(id: string): Promise<Organization | null> {
     const item = this.items.find((item) => item.id.toString() === id);
 
