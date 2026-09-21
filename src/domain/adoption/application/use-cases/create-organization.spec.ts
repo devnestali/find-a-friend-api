@@ -46,34 +46,32 @@ describe("Create Organization Use Case", () => {
   });
 
   it("should not be able create a organization with invalid CEP format", async () => {
-    await expect(
-      sut.execute({
-        responsiblePersonName: "John Doe",
-        email: "johndoe@example.com",
-        cep: "12345",
-        address: "First Street, 123",
-        phoneNumber: "11111111111",
-        password: "123456",
-        confirmPassword: "1234567",
-      }),
-    ).rejects.toBeInstanceOf(NotValid);
+    const result = await sut.execute({
+      responsiblePersonName: "John Doe",
+      email: "johndoe@example.com",
+      cep: "12345",
+      address: "First Street, 123",
+      phoneNumber: "11111111111",
+      password: "123456",
+      confirmPassword: "1234567",
+    });
 
+    expect(result).toBeInstanceOf(NotValid);
     expect(inMemoryOrganizationsRepository.items).toHaveLength(0);
   });
 
   it("should not be able create a organization with invalid phone number format", async () => {
-    await expect(
-      sut.execute({
-        responsiblePersonName: "John Doe",
-        email: "johndoe@example.com",
-        cep: "12345",
-        address: "First Street, 123",
-        phoneNumber: "0011111111111",
-        password: "123456",
-        confirmPassword: "1234567",
-      }),
-    ).rejects.toBeInstanceOf(NotValid);
+    const result = await sut.execute({
+      responsiblePersonName: "John Doe",
+      email: "johndoe@example.com",
+      cep: "12345",
+      address: "First Street, 123",
+      phoneNumber: "0011111111111",
+      password: "123456",
+      confirmPassword: "1234567",
+    });
 
+    expect(result).toBeInstanceOf(NotValid);
     expect(inMemoryOrganizationsRepository.items).toHaveLength(0);
   });
 });

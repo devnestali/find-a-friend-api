@@ -32,13 +32,13 @@ export class CreateOrganizationUseCase {
     const cepCode = CepCode.create(cep);
 
     if (cepCode instanceof NotValid) {
-      throw cepCode;
+      return cepCode;
     }
 
     const phone = PhoneNumber.create(phoneNumber);
 
     if (phone instanceof NotValid) {
-      throw phone;
+      return phone;
     }
 
     const organization = Organization.create({
