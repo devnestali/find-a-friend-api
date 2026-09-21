@@ -53,7 +53,7 @@ describe("Create Organization Use Case", () => {
       address: "First Street, 123",
       phoneNumber: "11111111111",
       password: "123456",
-      confirmPassword: "1234567",
+      confirmPassword: "123456",
     });
 
     expect(result).toBeInstanceOf(NotValid);
@@ -68,7 +68,7 @@ describe("Create Organization Use Case", () => {
       address: "First Street, 123",
       phoneNumber: "0011111111111",
       password: "123456",
-      confirmPassword: "1234567",
+      confirmPassword: "123456",
     });
 
     expect(result).toBeInstanceOf(NotValid);

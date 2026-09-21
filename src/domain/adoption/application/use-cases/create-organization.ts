@@ -41,6 +41,10 @@ export class CreateOrganizationUseCase {
       return phone;
     }
 
+    if (password !== confirmPassword) {
+      return new PasswordDoesNotMatch();
+    }
+
     const organization = Organization.create({
       responsiblePersonName,
       email,
