@@ -1,5 +1,5 @@
 import { Organization } from "../../enterprise/entities/organization.js";
-import type { OrganizationsRepository } from "../repositories/organization.repository.js";
+import type { OrganizationsRepository } from "../repositories/organizations.repository.js";
 import { ResourceNotFound } from "./errors/resource-not-found.js";
 
 interface GetOrganizationUseCaseRequest {

@@ -1,5 +1,5 @@
 import { hash } from "bcrypt";
-import type { OrganizationsRepository } from "../repositories/organization.repository.js";
+import type { OrganizationsRepository } from "../repositories/organizations.repository.js";
 
 import { EmailAlreadyExists } from "./errors/email-already-exists.js";
 

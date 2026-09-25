@@ -7,17 +7,21 @@ import type { DogSizeParams } from "./types/dog-size.js";
 import type { IndependenceLevels } from "./enums/dog-independence-levels.js";
 import type { SuitableEnvironments } from "./enums/dog-suitable-environments.js";
 
-interface DogProps {
+export interface DogProps {
   name: string;
   about: string;
   organizationId: UniqueEntityId;
   age: number;
-  dogSize: DogSizeParams;
-  energyLevel: EnergyLevels;
-  independenceLevel: IndependenceLevels;
-  suitableEnvironment: SuitableEnvironments;
+  latitude: number;
+  longitude: number;
+  dogSize?: DogSizeParams;
+  energyLevel?: EnergyLevels;
+  independenceLevel?: IndependenceLevels;
+  suitableEnvironment?: SuitableEnvironments;
   photos: string[];
   adoptionRequirements: string[];
+  createdAt?: Date;
+  updatedAt?: Date | null;
 }
 
 export class Dog extends Entity<DogProps> {
@@ -35,6 +39,14 @@ export class Dog extends Entity<DogProps> {
 
   get age() {
     return this.props.age;
+  }
+
+  get latitude() {
+    return this.props.latitude;
+  }
+
+  get longitude() {
+    return this.props.longitude;
   }
 
   get dogSize() {
@@ -59,6 +71,14 @@ export class Dog extends Entity<DogProps> {
 
   get adoptionRequirements() {
     return this.props.adoptionRequirements;
+  }
+
+  get createdAt() {
+    return this.props.createdAt;
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt;
   }
 
   static create(props: DogProps, id?: UniqueEntityId) {

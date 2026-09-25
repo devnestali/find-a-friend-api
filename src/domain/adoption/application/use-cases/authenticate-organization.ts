@@ -1,6 +1,6 @@
 import { compare } from "bcrypt";
 import type { Organization } from "../../enterprise/entities/organization.js";
-import type { OrganizationsRepository } from "../repositories/organization.repository.js";
+import type { OrganizationsRepository } from "../repositories/organizations.repository.js";
 import { ResourceNotFound } from "./errors/resource-not-found.js";
 import { PasswordDoesNotMatch } from "./errors/password-does-not-match.js";
 import { InvalidCredentials } from "./errors/invalid-credentials.js";

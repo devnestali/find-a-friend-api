@@ -1,4 +1,4 @@
-import type { OrganizationsRepository } from "@/domain/adoption/application/repositories/organization.repository.js";
+import type { OrganizationsRepository } from "@/domain/adoption/application/repositories/organizations.repository.js";
 import type { Organization } from "@/domain/adoption/enterprise/entities/organization.js";
 import { prisma } from "../database/prisma.js";
 import { OrganizationMapper } from "../utils/organization-mapper.js";
