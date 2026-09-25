@@ -16,26 +16,13 @@ describe("Get Organization Use Case", () => {
   });
 
   it("should be able to get a organization", async () => {
-    const phoneNumber = PhoneNumber.create("11111111111");
-    const cep = CepCode.create("12345678");
-
-    if (phoneNumber instanceof NotValid) {
-      return phoneNumber;
-    }
-
-    if (cep instanceof NotValid) {
-      return cep;
-    }
-
     const newOrganization = makeOrganization({
-      responsiblePersonName: "John Doe",
       email: "johndoe@example.com",
-      address: "first street 1",
-      cep,
-      phoneNumber,
-      password: "123456",
-      confirmPassword: "123456",
     });
+
+    if (newOrganization instanceof NotValid) {
+      return newOrganization;
+    }
 
     await inMemoryOrganizationsRepository.create(newOrganization);
 
@@ -58,26 +45,11 @@ describe("Get Organization Use Case", () => {
   });
 
   it("should not be able to get a organization if the id is different", async () => {
-    const phoneNumber = PhoneNumber.create("11111111111");
-    const cep = CepCode.create("12345678");
+    const newOrganization = makeOrganization();
 
-    if (phoneNumber instanceof NotValid) {
-      return phoneNumber;
+    if (newOrganization instanceof NotValid) {
+      return newOrganization;
     }
-
-    if (cep instanceof NotValid) {
-      return cep;
-    }
-
-    const newOrganization = makeOrganization({
-      responsiblePersonName: "John Doe",
-      email: "johndoe@example.com",
-      address: "first street 1",
-      cep,
-      phoneNumber,
-      password: "123456",
-      confirmPassword: "123456",
-    });
 
     await inMemoryOrganizationsRepository.create(newOrganization);
 
