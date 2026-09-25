@@ -15,4 +15,14 @@ export class InMemoryOrganizationsRepository implements OrganizationsRepository 
 
     return item;
   }
+
+  async findByEmail(email: string): Promise<Organization | null> {
+    const item = this.items.find(
+      (organization) => organization.email === email,
+    );
+
+    if (!item) return null;
+
+    return item;
+  }
 }
