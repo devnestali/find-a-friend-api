@@ -1,4 +1,4 @@
-import type { OrganizationsRepository } from "@/domain/adoption/application/repositories/organization.repository.js";
+import type { OrganizationsRepository } from "@/domain/adoption/application/repositories/organizations.repository.js";
 import type { Organization } from "@/domain/adoption/enterprise/entities/organization.js";
 
 export class InMemoryOrganizationsRepository implements OrganizationsRepository {
