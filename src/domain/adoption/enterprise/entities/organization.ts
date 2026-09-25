@@ -10,7 +10,8 @@ export interface OrganizationProps {
   address: string;
   phoneNumber: PhoneNumber;
   password: string;
-  confirmPassword: string;
+  createdAt?: Date;
+  updatedAt?: Date | null;
 }
 
 export class Organization extends Entity<OrganizationProps> {
@@ -38,8 +39,20 @@ export class Organization extends Entity<OrganizationProps> {
     return this.props.password;
   }
 
-  get confirmPassword() {
-    return this.props.confirmPassword;
+  get createdAt() {
+    return this.props.createdAt;
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt;
+  }
+
+  set responsiblePersonName(responsiblePersonName: string) {
+    this.props.responsiblePersonName = responsiblePersonName;
+  }
+
+  set email(email: string) {
+    this.props.email = email;
   }
 
   static create(props: OrganizationProps, id?: UniqueEntityId) {

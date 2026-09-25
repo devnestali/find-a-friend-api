@@ -3,6 +3,10 @@ import { NotValid } from "./errors/not-valid.js";
 export class PhoneNumber {
   public readonly value: string;
 
+  toString() {
+    return this.value;
+  }
+
   private constructor(value: string) {
     this.value = value;
   }
