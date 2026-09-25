@@ -40,9 +40,25 @@ export async function authenticate(
     },
   );
 
-  console.log(token);
+  const refreshToken = await reply.jwtSign(
+    {},
+    {
+      sign: {
+        sub: result.organization.id.toString(),
+        expiresIn: "7d",
+      },
+    },
+  );
 
-  return reply.status(200).send({
-    token,
-  });
+  return reply
+    .setCookie("refreshToken", refreshToken, {
+      path: "/",
+      secure: true,
+      sameSite: true,
+      httpOnly: true,
+    })
+    .status(200)
+    .send({
+      token,
+    });
 }
