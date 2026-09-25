@@ -2,6 +2,10 @@ import { InMemoryOrganizationsRepository } from "../../../../../test/repositorie
 import { NotValid } from "../../enterprise/entities/value-objects/errors/not-valid.js";
 import { PasswordDoesNotMatch } from "./errors/password-does-not-match.js";
 import { CreateOrganizationUseCase } from "./create-organization.js";
+import { makeOrganization } from "../../../../../test/factories/make-organization.js";
+import { PhoneNumber } from "../../enterprise/entities/value-objects/phone-number.js";
+import { CepCode } from "../../enterprise/entities/value-objects/cep-code.js";
+import { EmailAlreadyExists } from "./errors/email-already-exists.js";
 
 let sut: CreateOrganizationUseCase;
 let inMemoryOrganizationsRepository: InMemoryOrganizationsRepository;
@@ -20,29 +24,12 @@ describe("Create Organization Use Case", () => {
       address: "First Street, 123",
       phoneNumber: "11111111111",
       password: "123456",
-      confirmPassword: "123456",
     });
 
     expect(inMemoryOrganizationsRepository.items).toHaveLength(1);
     expect(inMemoryOrganizationsRepository.items).toEqual([
       expect.objectContaining({ email: "johndoe@example.com" }),
     ]);
-  });
-
-  it("should not be able create a organization with different passwords", async () => {
-    const result = await sut.execute({
-      responsiblePersonName: "John Doe",
-      email: "johndoe@example.com",
-      cep: "12345678",
-      address: "First Street, 123",
-      phoneNumber: "11111111111",
-      password: "123456",
-      confirmPassword: "1234567",
-    });
-
-    expect(result).toBeInstanceOf(PasswordDoesNotMatch);
-
-    expect(inMemoryOrganizationsRepository.items).toHaveLength(0);
   });
 
   it("should not be able create a organization with invalid CEP format", async () => {
@@ -53,7 +40,6 @@ describe("Create Organization Use Case", () => {
       address: "First Street, 123",
       phoneNumber: "11111111111",
       password: "123456",
-      confirmPassword: "123456",
     });
 
     expect(result).toBeInstanceOf(NotValid);
@@ -68,10 +54,33 @@ describe("Create Organization Use Case", () => {
       address: "First Street, 123",
       phoneNumber: "0011111111111",
       password: "123456",
-      confirmPassword: "123456",
     });
 
     expect(result).toBeInstanceOf(NotValid);
     expect(inMemoryOrganizationsRepository.items).toHaveLength(0);
+  });
+
+  it("should not be able create a organization with same e-mail as other", async () => {
+    const newOrganization = makeOrganization({
+      email: "johndoe@example.com",
+    });
+
+    if (newOrganization instanceof NotValid) {
+      return newOrganization;
+    }
+
+    await inMemoryOrganizationsRepository.create(newOrganization);
+
+    const result = await sut.execute({
+      responsiblePersonName: "John Doe",
+      email: "johndoe@example.com",
+      cep: "12345678",
+      address: "First Street, 123",
+      phoneNumber: "11111111111",
+      password: "123456",
+    });
+
+    expect(result).toBeInstanceOf(EmailAlreadyExists);
+    expect(inMemoryOrganizationsRepository.items).toHaveLength(1);
   });
 });

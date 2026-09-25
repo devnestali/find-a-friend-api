@@ -1,9 +1,12 @@
+import { hash } from "bcrypt";
+import type { OrganizationsRepository } from "../repositories/organization.repository.js";
+
+import { EmailAlreadyExists } from "./errors/email-already-exists.js";
+
 import { Organization } from "../../enterprise/entities/organization.js";
 import { CepCode } from "../../enterprise/entities/value-objects/cep-code.js";
 import { NotValid } from "../../enterprise/entities/value-objects/errors/not-valid.js";
-import { PasswordDoesNotMatch } from "./errors/password-does-not-match.js";
 import { PhoneNumber } from "../../enterprise/entities/value-objects/phone-number.js";
-import type { OrganizationsRepository } from "../repositories/organization.repository.js";
 
 interface CreateOrganizationUseCaseRequest {
   responsiblePersonName: string;
@@ -12,7 +15,6 @@ interface CreateOrganizationUseCaseRequest {
   address: string;
   phoneNumber: string;
   password: string;
-  confirmPassword: string;
 }
 
 interface CreateOrganizationUseCaseResponse {}
@@ -27,8 +29,14 @@ export class CreateOrganizationUseCase {
     address,
     phoneNumber,
     password,
-    confirmPassword,
   }: CreateOrganizationUseCaseRequest): Promise<CreateOrganizationUseCaseResponse> {
+    const emailAlreadyExists =
+      await this.organizationRepository.findByEmail(email);
+
+    if (emailAlreadyExists) {
+      return new EmailAlreadyExists();
+    }
+
     const cepCode = CepCode.create(cep);
 
     if (cepCode instanceof NotValid) {
@@ -41,9 +49,7 @@ export class CreateOrganizationUseCase {
       return phone;
     }
 
-    if (password !== confirmPassword) {
-      return new PasswordDoesNotMatch();
-    }
+    const hashedPassword = await hash(password, 8);
 
     const organization = Organization.create({
       responsiblePersonName,
@@ -51,13 +57,8 @@ export class CreateOrganizationUseCase {
       cep: cepCode,
       address,
       phoneNumber: phone,
-      password,
-      confirmPassword,
+      password: hashedPassword,
     });
-
-    if (organization instanceof PasswordDoesNotMatch) {
-      return organization;
-    }
 
     await this.organizationRepository.create(organization);
 
