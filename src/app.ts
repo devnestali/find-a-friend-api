@@ -1,12 +1,12 @@
 import fastify from "fastify";
 import fastifyJwt from "@fastify/jwt";
 import fastifyCookie from "@fastify/cookie";
+import { z, ZodError } from "zod";
 
 import { organizationRoutes } from "./infra/controllers/organization/organization.routes.js";
-
-import { z, ZodError } from "zod";
-import { env } from "./core/env/index.js";
 import { dogRoutes } from "./infra/controllers/dog/dog.routes.js";
+
+import { env } from "./core/env/index.js";
 
 export const app = fastify();
 
