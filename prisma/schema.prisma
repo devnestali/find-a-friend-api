@@ -12,6 +12,32 @@ datasource db {
   provider = "postgresql"
 }
 
+enum DogSize {
+  LITTLE_PUPPY
+  PUPPY
+  ADULT
+}
+
+enum EnergyLevels {
+  VERY_LOW
+  LOW
+  MEDIUM
+  HIGH
+  VERY_HIGH
+}
+
+enum IndependenceLevels {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum SuitableEnvironments {
+  HOUSE
+  APARTMENT
+  SPACIOUS_ENVIRONMENT
+}
+
 model Organization {
   id                    String    @id
   responsiblePersonName String
@@ -22,6 +48,29 @@ model Organization {
   password              String
   createdAt             DateTime  @default(now())
   updatedAt             DateTime?
+  dogs                  Dog[]
 
   @@map("organization")
+}
+
+model Dog {
+  id                   String               @id
+  name                 String
+  about                String
+  organizationId       String
+  age                  Float
+  latitude             Float
+  longitude            Float
+  dogSize              DogSize
+  energyLevel          EnergyLevels
+  independenceLevel    IndependenceLevels
+  suitableEnvironment  SuitableEnvironments
+  photos               String[]
+  adoptionRequirements String[]
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime?
+
+  organization Organization @relation(fields: [organizationId], references: [id])
+
+  @@map("dog")
 }
