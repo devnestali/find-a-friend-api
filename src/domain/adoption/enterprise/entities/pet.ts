@@ -1,21 +1,21 @@
 import { Entity } from "@/core/entities/entity.js";
-import { EnergyLevels } from "./enums/dog-energy-levels.js";
+import { EnergyLevels } from "./enums/pet-energy-levels.js";
 
 import type { UniqueEntityId } from "@/core/entities/unique-entity-id.js";
 
-import type { DogSize } from "./enums/dog-size.js";
-import type { IndependenceLevels } from "./enums/dog-independence-levels.js";
-import type { SuitableEnvironments } from "./enums/dog-suitable-environments.js";
+import type { PetSize } from "./enums/pet-size.js";
+import type { IndependenceLevels } from "./enums/pet-independence-levels.js";
+import type { SuitableEnvironments } from "./enums/pet-suitable-environments.js";
 import type { Optional } from "@/core/types/optional.js";
 
-export interface DogProps {
+export interface PetProps {
   name: string;
   about: string;
   organizationId: UniqueEntityId;
   age: number;
   latitude: number;
   longitude: number;
-  dogSize: DogSize;
+  petSize: PetSize;
   energyLevel: EnergyLevels;
   independenceLevel: IndependenceLevels;
   suitableEnvironment: SuitableEnvironments;
@@ -25,7 +25,7 @@ export interface DogProps {
   updatedAt?: Date;
 }
 
-export class Dog extends Entity<DogProps> {
+export class Pet extends Entity<PetProps> {
   get organizationId() {
     return this.props.organizationId;
   }
@@ -50,8 +50,8 @@ export class Dog extends Entity<DogProps> {
     return this.props.longitude;
   }
 
-  get dogSize() {
-    return this.props.dogSize;
+  get petSize() {
+    return this.props.petSize;
   }
 
   get energyLevel() {
@@ -83,11 +83,11 @@ export class Dog extends Entity<DogProps> {
   }
 
   static create(
-    props: Optional<DogProps, "createdAt" | "updatedAt">,
+    props: Optional<PetProps, "createdAt" | "updatedAt">,
     id?: UniqueEntityId,
   ) {
-    const dog = new Dog(props, id);
+    const pet = new Pet(props, id);
 
-    return dog;
+    return pet;
   }
 }

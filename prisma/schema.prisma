@@ -12,7 +12,7 @@ datasource db {
   provider = "postgresql"
 }
 
-enum DogSize {
+enum PetSize {
   LITTLE_PUPPY
   PUPPY
   ADULT
@@ -48,12 +48,12 @@ model Organization {
   password              String
   createdAt             DateTime  @default(now())
   updatedAt             DateTime?
-  dogs                  Dog[]
+  pets                  Pet[]
 
   @@map("organization")
 }
 
-model Dog {
+model Pet {
   id                   String               @id
   name                 String
   about                String
@@ -61,7 +61,7 @@ model Dog {
   age                  Float
   latitude             Float
   longitude            Float
-  dogSize              DogSize
+  petSize              PetSize
   energyLevel          EnergyLevels
   independenceLevel    IndependenceLevels
   suitableEnvironment  SuitableEnvironments
@@ -72,5 +72,5 @@ model Dog {
 
   organization Organization @relation(fields: [organizationId], references: [id])
 
-  @@map("dog")
+  @@map("pet")
 }

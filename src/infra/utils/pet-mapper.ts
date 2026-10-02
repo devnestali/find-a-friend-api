@@ -1,37 +1,33 @@
 import {
-  DogSize as PrismaDogSize,
+  PetSize as PrismaPetSize,
   EnergyLevels as PrismaEnergyLevels,
   IndependenceLevels as PrismaIndependenceLevels,
   SuitableEnvironments as PrismaSuitableEnvironments,
 } from "@/generated/prisma/enums.js";
 
-import { DogSize } from "@/domain/adoption/enterprise/entities/enums/dog-size.js";
-import { EnergyLevels } from "@/domain/adoption/enterprise/entities/enums/dog-energy-levels.js";
-import { IndependenceLevels } from "@/domain/adoption/enterprise/entities/enums/dog-independence-levels.js";
-import { SuitableEnvironments } from "@/domain/adoption/enterprise/entities/enums/dog-suitable-environments.js";
+import { PetSize } from "@/domain/adoption/enterprise/entities/enums/pet-size.js";
+import { EnergyLevels } from "@/domain/adoption/enterprise/entities/enums/pet-energy-levels.js";
+import { IndependenceLevels } from "@/domain/adoption/enterprise/entities/enums/pet-independence-levels.js";
+import { SuitableEnvironments } from "@/domain/adoption/enterprise/entities/enums/pet-suitable-environments.js";
 
-export class DogMapper {
-  static dogSizeToPrisma(raw?: DogSize): PrismaDogSize | null {
+export class PetMapper {
+  static petSizeToPrisma(raw: PetSize): PrismaPetSize {
     switch (raw) {
-      case DogSize.ADULT: {
-        return PrismaDogSize.ADULT;
+      case PetSize.ADULT: {
+        return PrismaPetSize.ADULT;
       }
 
-      case DogSize.PUPPY: {
-        return PrismaDogSize.PUPPY;
+      case PetSize.PUPPY: {
+        return PrismaPetSize.PUPPY;
       }
 
-      case DogSize.LITTLE_PUPPY: {
-        return PrismaDogSize.LITTLE_PUPPY;
-      }
-
-      default: {
-        return null;
+      case PetSize.LITTLE_PUPPY: {
+        return PrismaPetSize.LITTLE_PUPPY;
       }
     }
   }
 
-  static energyLevelsToPrisma(raw?: EnergyLevels): PrismaEnergyLevels | null {
+  static energyLevelsToPrisma(raw: EnergyLevels): PrismaEnergyLevels {
     switch (raw) {
       case EnergyLevels.VERY_HIGH: {
         return PrismaEnergyLevels.VERY_HIGH;
@@ -48,15 +44,12 @@ export class DogMapper {
       case EnergyLevels.VERY_LOW: {
         return PrismaEnergyLevels.VERY_LOW;
       }
-      default: {
-        return null;
-      }
     }
   }
 
   static independenceLevelsToPrisma(
-    raw?: IndependenceLevels,
-  ): PrismaIndependenceLevels | null {
+    raw: IndependenceLevels,
+  ): PrismaIndependenceLevels {
     switch (raw) {
       case IndependenceLevels.HIGH: {
         return PrismaIndependenceLevels.HIGH;
@@ -67,15 +60,12 @@ export class DogMapper {
       case IndependenceLevels.LOW: {
         return PrismaIndependenceLevels.LOW;
       }
-      default: {
-        return null;
-      }
     }
   }
 
   static suitableEnvironmentsToPrisma(
-    raw?: SuitableEnvironments,
-  ): PrismaSuitableEnvironments | null {
+    raw: SuitableEnvironments,
+  ): PrismaSuitableEnvironments {
     switch (raw) {
       case SuitableEnvironments.APARTMENT: {
         return PrismaSuitableEnvironments.APARTMENT;
@@ -85,9 +75,6 @@ export class DogMapper {
       }
       case SuitableEnvironments.SPACIOUS_ENVIRONMENT: {
         return PrismaSuitableEnvironments.SPACIOUS_ENVIRONMENT;
-      }
-      default: {
-        return null;
       }
     }
   }

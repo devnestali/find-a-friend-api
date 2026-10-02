@@ -1,23 +1,23 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id.js";
 import {
-  Dog,
-  type DogProps,
-} from "@/domain/adoption/enterprise/entities/dog.js";
-import { EnergyLevels } from "@/domain/adoption/enterprise/entities/enums/dog-energy-levels.js";
-import { IndependenceLevels } from "@/domain/adoption/enterprise/entities/enums/dog-independence-levels.js";
-import { SuitableEnvironments } from "@/domain/adoption/enterprise/entities/enums/dog-suitable-environments.js";
-import { DogSize } from "@/domain/adoption/enterprise/entities/enums/dog-size.js";
+  Pet,
+  type PetProps,
+} from "@/domain/adoption/enterprise/entities/pet.js";
+import { EnergyLevels } from "@/domain/adoption/enterprise/entities/enums/pet-energy-levels.js";
+import { IndependenceLevels } from "@/domain/adoption/enterprise/entities/enums/pet-independence-levels.js";
+import { SuitableEnvironments } from "@/domain/adoption/enterprise/entities/enums/pet-suitable-environments.js";
+import { PetSize } from "@/domain/adoption/enterprise/entities/enums/pet-size.js";
 
 import { faker } from "@faker-js/faker";
 
-export function makeDog(override: Partial<DogProps> = {}, id?: UniqueEntityId) {
-  const dog = Dog.create(
+export function makePet(override: Partial<PetProps> = {}, id?: UniqueEntityId) {
+  const pet = Pet.create(
     {
       organizationId: new UniqueEntityId("organization-01"),
       name: "Leko",
       about: faker.lorem.sentence(4),
       age: 0.6,
-      dogSize: DogSize.LITTLE_PUPPY,
+      petSize: PetSize.LITTLE_PUPPY,
       energyLevel: EnergyLevels.VERY_HIGH,
       independenceLevel: IndependenceLevels.MEDIUM,
       suitableEnvironment: SuitableEnvironments.APARTMENT,
@@ -34,5 +34,5 @@ export function makeDog(override: Partial<DogProps> = {}, id?: UniqueEntityId) {
     id,
   );
 
-  return dog;
+  return pet;
 }

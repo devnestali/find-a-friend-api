@@ -1,21 +1,20 @@
-import type { UniqueEntityId } from "@/core/entities/unique-entity-id.js";
-import type { EnergyLevels } from "../../enterprise/entities/enums/dog-energy-levels.js";
-import type { IndependenceLevels } from "../../enterprise/entities/enums/dog-independence-levels.js";
-import type { SuitableEnvironments } from "../../enterprise/entities/enums/dog-suitable-environments.js";
-import type { DogSize } from "../../enterprise/entities/enums/dog-size.js";
-import type { DogsRepository } from "../repositories/dog.repository.js";
+import type { EnergyLevels } from "../../enterprise/entities/enums/pet-energy-levels.js";
+import type { IndependenceLevels } from "../../enterprise/entities/enums/pet-independence-levels.js";
+import type { SuitableEnvironments } from "../../enterprise/entities/enums/pet-suitable-environments.js";
+import type { PetSize } from "../../enterprise/entities/enums/pet-size.js";
+import type { PetsRepository } from "../repositories/pet.repository.js";
 import type { OrganizationsRepository } from "../repositories/organizations.repository.js";
 import { ResourceNotFound } from "./errors/resource-not-found.js";
-import { Dog } from "../../enterprise/entities/dog.js";
+import { Pet } from "../../enterprise/entities/pet.js";
 
-interface CreateDogUseCaseRequest {
+interface CreatePetUseCaseRequest {
   name: string;
   about: string;
   age: number;
 
   organizationId: string;
 
-  dogSize: DogSize;
+  petSize: PetSize;
   energyLevel: EnergyLevels;
   independenceLevel: IndependenceLevels;
   suitableEnvironment: SuitableEnvironments;
@@ -26,19 +25,19 @@ interface CreateDogUseCaseRequest {
   longitude: number;
 }
 
-interface CreateDogUseCaseResponse {}
+interface CreatePetUseCaseResponse {}
 
-export class CreateDogUseCase {
+export class CreatePetUseCase {
   constructor(
     private organizationsRepository: OrganizationsRepository,
-    private dogsRepository: DogsRepository,
+    private petsRepository: PetsRepository,
   ) {}
 
   async execute({
     name,
     about,
     age,
-    dogSize,
+    petSize,
     energyLevel,
     organizationId,
     independenceLevel,
@@ -47,7 +46,7 @@ export class CreateDogUseCase {
     adoptionRequirements,
     latitude,
     longitude,
-  }: CreateDogUseCaseRequest): Promise<CreateDogUseCaseResponse> {
+  }: CreatePetUseCaseRequest): Promise<CreatePetUseCaseResponse> {
     const organization =
       await this.organizationsRepository.findById(organizationId);
 
@@ -55,11 +54,11 @@ export class CreateDogUseCase {
       return new ResourceNotFound();
     }
 
-    const dog = Dog.create({
+    const pet = Pet.create({
       name,
       about,
       age,
-      dogSize,
+      petSize,
       energyLevel,
       organizationId: organization.id,
       independenceLevel,
@@ -70,10 +69,10 @@ export class CreateDogUseCase {
       longitude,
     });
 
-    await this.dogsRepository.create(dog);
+    await this.petsRepository.create(pet);
 
     return {
-      dog,
+      pet,
     };
   }
 }
