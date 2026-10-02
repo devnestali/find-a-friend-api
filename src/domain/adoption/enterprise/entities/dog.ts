@@ -3,9 +3,10 @@ import { EnergyLevels } from "./enums/dog-energy-levels.js";
 
 import type { UniqueEntityId } from "@/core/entities/unique-entity-id.js";
 
-import type { DogSizeParams } from "./types/dog-size.js";
+import type { DogSize } from "./enums/dog-size.js";
 import type { IndependenceLevels } from "./enums/dog-independence-levels.js";
 import type { SuitableEnvironments } from "./enums/dog-suitable-environments.js";
+import type { Optional } from "@/core/types/optional.js";
 
 export interface DogProps {
   name: string;
@@ -14,14 +15,14 @@ export interface DogProps {
   age: number;
   latitude: number;
   longitude: number;
-  dogSize?: DogSizeParams;
-  energyLevel?: EnergyLevels;
-  independenceLevel?: IndependenceLevels;
-  suitableEnvironment?: SuitableEnvironments;
+  dogSize: DogSize;
+  energyLevel: EnergyLevels;
+  independenceLevel: IndependenceLevels;
+  suitableEnvironment: SuitableEnvironments;
   photos: string[];
   adoptionRequirements: string[];
   createdAt?: Date;
-  updatedAt?: Date | null;
+  updatedAt?: Date;
 }
 
 export class Dog extends Entity<DogProps> {
@@ -81,7 +82,10 @@ export class Dog extends Entity<DogProps> {
     return this.props.updatedAt;
   }
 
-  static create(props: DogProps, id?: UniqueEntityId) {
+  static create(
+    props: Optional<DogProps, "createdAt" | "updatedAt">,
+    id?: UniqueEntityId,
+  ) {
     const dog = new Dog(props, id);
 
     return dog;

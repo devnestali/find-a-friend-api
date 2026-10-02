@@ -2,6 +2,7 @@ import { Entity } from "@/core/entities/entity.js";
 import type { CepCode } from "./value-objects/cep-code.js";
 import type { PhoneNumber } from "./value-objects/phone-number.js";
 import type { UniqueEntityId } from "@/core/entities/unique-entity-id.js";
+import type { Optional } from "@/core/types/optional.js";
 
 export interface OrganizationProps {
   responsiblePersonName: string;
@@ -11,7 +12,7 @@ export interface OrganizationProps {
   phoneNumber: PhoneNumber;
   password: string;
   createdAt?: Date;
-  updatedAt?: Date | null;
+  updatedAt?: Date;
 }
 
 export class Organization extends Entity<OrganizationProps> {
@@ -55,7 +56,10 @@ export class Organization extends Entity<OrganizationProps> {
     this.props.email = email;
   }
 
-  static create(props: OrganizationProps, id?: UniqueEntityId) {
+  static create(
+    props: Optional<OrganizationProps, "createdAt" | "updatedAt">,
+    id?: UniqueEntityId,
+  ) {
     const organization = new Organization(props, id);
 
     return organization;

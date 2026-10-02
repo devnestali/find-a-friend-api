@@ -6,6 +6,7 @@ import { organizationRoutes } from "./infra/controllers/organization/organizatio
 
 import { z, ZodError } from "zod";
 import { env } from "./core/env/index.js";
+import { dogRoutes } from "./infra/controllers/dog/dog.routes.js";
 
 export const app = fastify();
 
@@ -23,6 +24,7 @@ app.register(fastifyJwt, {
 app.register(fastifyCookie);
 
 app.register(organizationRoutes);
+app.register(dogRoutes);
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {

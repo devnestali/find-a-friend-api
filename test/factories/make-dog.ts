@@ -6,6 +6,7 @@ import {
 import { EnergyLevels } from "@/domain/adoption/enterprise/entities/enums/dog-energy-levels.js";
 import { IndependenceLevels } from "@/domain/adoption/enterprise/entities/enums/dog-independence-levels.js";
 import { SuitableEnvironments } from "@/domain/adoption/enterprise/entities/enums/dog-suitable-environments.js";
+import { DogSize } from "@/domain/adoption/enterprise/entities/enums/dog-size.js";
 
 import { faker } from "@faker-js/faker";
 
@@ -16,7 +17,7 @@ export function makeDog(override: Partial<DogProps> = {}, id?: UniqueEntityId) {
       name: "Leko",
       about: faker.lorem.sentence(4),
       age: 0.6,
-      dogSize: "little puppy",
+      dogSize: DogSize.LITTLE_PUPPY,
       energyLevel: EnergyLevels.VERY_HIGH,
       independenceLevel: IndependenceLevels.MEDIUM,
       suitableEnvironment: SuitableEnvironments.APARTMENT,

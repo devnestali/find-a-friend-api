@@ -8,6 +8,7 @@ import { SuitableEnvironments } from "../../enterprise/entities/enums/dog-suitab
 import { makeOrganization } from "../../../../../test/factories/make-organization.js";
 import { NotValid } from "../../enterprise/entities/value-objects/errors/not-valid.js";
 import { ResourceNotFound } from "./errors/resource-not-found.js";
+import { DogSize } from "../../enterprise/entities/enums/dog-size.js";
 
 let sut: CreateDogUseCase;
 
@@ -39,7 +40,7 @@ describe("Create Dog Use Case", async () => {
       name: "Leko",
       about: "It's a dog with a high energy level",
       age: 0.6,
-      dogSize: "little puppy",
+      dogSize: DogSize.LITTLE_PUPPY,
       energyLevel: EnergyLevels.VERY_HIGH,
       independenceLevel: IndependenceLevels.MEDIUM,
       suitableEnvironment: SuitableEnvironments.APARTMENT,
@@ -65,7 +66,7 @@ describe("Create Dog Use Case", async () => {
       name: "Leko",
       about: "It's a dog with a high energy level",
       age: 0.6,
-      dogSize: "little puppy",
+      dogSize: DogSize.LITTLE_PUPPY,
       energyLevel: EnergyLevels.VERY_HIGH,
       independenceLevel: IndependenceLevels.MEDIUM,
       suitableEnvironment: SuitableEnvironments.APARTMENT,
