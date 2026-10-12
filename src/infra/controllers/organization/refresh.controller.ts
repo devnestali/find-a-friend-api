@@ -19,6 +19,7 @@ export async function refresh(request: FastifyRequest, reply: FastifyReply) {
     {
       sign: {
         sub,
+        expiresIn: "7d",
       },
     },
   );
