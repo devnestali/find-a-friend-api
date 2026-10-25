@@ -1,7 +1,11 @@
-import type { PetsRepository } from "@/domain/adoption/application/repositories/pet.repository.js";
+import type {
+  FindManyNearbyParams,
+  PetsRepository,
+} from "@/domain/adoption/application/repositories/pet.repository.js";
 import type { Pet } from "@/domain/adoption/enterprise/entities/pet.js";
 import { prisma } from "../database/prisma.js";
 import { PetMapper } from "../utils/pet-mapper.js";
+import { getDistanceBetweenCoordinates } from "@/core/utils/get-distance-between-coordinates.js";
 
 export class PrismaPetsRepository implements PetsRepository {
   async create(pet: Pet): Promise<void> {
@@ -26,5 +30,54 @@ export class PrismaPetsRepository implements PetsRepository {
         photos: pet.photos,
       },
     });
+  }
+
+  async findManyNearby(params: FindManyNearbyParams): Promise<Pet[]> {
+    const nearbyPets = (await prisma.pet.findMany())
+      .filter((animal) => {
+        const distance = getDistanceBetweenCoordinates(
+          {
+            latitude: params.latitude,
+            longitude: params.longitude,
+          },
+          {
+            latitude: animal.latitude,
+            longitude: animal.longitude,
+          },
+        );
+
+        return distance < 10;
+      })
+      .sort((a, b) => {
+        const distance_a = getDistanceBetweenCoordinates(
+          {
+            latitude: params.latitude,
+            longitude: params.longitude,
+          },
+          {
+            latitude: a.latitude,
+            longitude: a.longitude,
+          },
+        );
+
+        const distance_b = getDistanceBetweenCoordinates(
+          {
+            latitude: params.latitude,
+            longitude: params.longitude,
+          },
+          {
+            latitude: b.latitude,
+            longitude: b.longitude,
+          },
+        );
+
+        return distance_a - distance_b;
+      });
+
+    const pets = nearbyPets.map((pet) => {
+      return PetMapper.prismaToDomain(pet);
+    });
+
+    return pets;
   }
 }
