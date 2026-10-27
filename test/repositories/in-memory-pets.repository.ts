@@ -54,4 +54,8 @@ export class InMemoryPetsRepository implements PetsRepository {
         return distance_a - distance_b;
       });
   }
+
+  async findMany(): Promise<Pet[]> {
+    return this.items;
+  }
 }
