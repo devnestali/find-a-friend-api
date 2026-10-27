@@ -8,4 +8,5 @@ export interface FindManyNearbyParams {
 export interface PetsRepository {
   create: (pet: Pet) => Promise<void>;
   findManyNearby: (params: FindManyNearbyParams) => Promise<Pet[]>;
+  findMany: () => Promise<Pet[]>;
 }
