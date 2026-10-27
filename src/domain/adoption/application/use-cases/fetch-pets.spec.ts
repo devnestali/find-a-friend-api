@@ -1,6 +1,5 @@
 import { makePet } from "../../../../../test/factories/make-pet.js";
 import { InMemoryPetsRepository } from "../../../../../test/repositories/in-memory-pets.repository.js";
-import { ResourceNotFound } from "./errors/resource-not-found.js";
 import { FetchPetsUseCase } from "./fetch-pets.js";
 
 let sut: FetchPetsUseCase;
