@@ -80,4 +80,12 @@ export class PrismaPetsRepository implements PetsRepository {
 
     return pets;
   }
+
+  async findMany(): Promise<Pet[]> {
+    const pets = (await prisma.pet.findMany()).map((each) => {
+      return PetMapper.prismaToDomain(each);
+    });
+
+    return pets;
+  }
 }
