@@ -1,8 +1,9 @@
+import type { FastifyReply, FastifyRequest } from "fastify";
+import { z } from "zod";
+
 import { NotFoundPetsNearby } from "@/domain/adoption/application/use-cases/errors/not-found-pets-nearby.js";
 import { FetchNearbyPetsUseCase } from "@/domain/adoption/application/use-cases/fetch-nearby-pets.js";
 import { PrismaPetsRepository } from "@/infra/repositories/prisma-pets.repository.js";
-import type { FastifyReply, FastifyRequest } from "fastify";
-import { z } from "zod";
 
 export async function listNearby(request: FastifyRequest, reply: FastifyReply) {
   const locationQuerySchema = z.object({

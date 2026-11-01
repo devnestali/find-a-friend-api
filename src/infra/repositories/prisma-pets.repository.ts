@@ -1,4 +1,5 @@
 import type {
+  FindManyByFilterParams,
   FindManyNearbyParams,
   PetsRepository,
 } from "@/domain/adoption/application/repositories/pet.repository.js";
@@ -87,5 +88,39 @@ export class PrismaPetsRepository implements PetsRepository {
     });
 
     return pets;
+  }
+
+  async findManyByFilter(params: FindManyByFilterParams): Promise<Pet[]> {
+    const filteredPets = await prisma.pet.findMany({
+      where: {
+        ...(params.age !== undefined && {
+          age: params.age,
+        }),
+
+        ...(params.petSize !== undefined && {
+          petSize: PetMapper.petSizeToPrisma(params.petSize),
+        }),
+
+        ...(params.energyLevel !== undefined && {
+          energyLevel: PetMapper.energyLevelsToPrisma(params.energyLevel),
+        }),
+
+        ...(params.independenceLevel !== undefined && {
+          independenceLevel: PetMapper.independenceLevelsToPrisma(
+            params.independenceLevel,
+          ),
+        }),
+
+        ...(params.suitableEnvironment !== undefined && {
+          suitableEnvironment: PetMapper.suitableEnvironmentsToPrisma(
+            params.suitableEnvironment,
+          ),
+        }),
+      },
+    });
+
+    return filteredPets.map((pet) => {
+      return PetMapper.prismaToDomain(pet);
+    });
   }
 }
