@@ -58,7 +58,7 @@ export class Pet extends Entity<PetProps> {
     return this.props.energyLevel;
   }
 
-  get independencyLevel() {
+  get independenceLevel() {
     return this.props.independenceLevel;
   }
 

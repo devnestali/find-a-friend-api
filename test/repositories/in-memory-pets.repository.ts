@@ -1,5 +1,6 @@
 import { getDistanceBetweenCoordinates } from "@/core/utils/get-distance-between-coordinates.js";
 import type {
+  FindManyByFilterParams,
   FindManyNearbyParams,
   PetsRepository,
 } from "@/domain/adoption/application/repositories/pet.repository.js";
@@ -57,5 +58,40 @@ export class InMemoryPetsRepository implements PetsRepository {
 
   async findMany(): Promise<Pet[]> {
     return this.items;
+  }
+
+  async findManyByFilter(params: FindManyByFilterParams): Promise<Pet[]> {
+    return this.items.filter((item) => {
+      if (params.age !== undefined && item.age !== params.age) {
+        return false;
+      }
+
+      if (
+        params.energyLevel !== undefined &&
+        item.energyLevel !== params.energyLevel
+      ) {
+        return false;
+      }
+
+      if (
+        params.independenceLevel !== undefined &&
+        item.independenceLevel !== params.independenceLevel
+      ) {
+        return false;
+      }
+
+      if (params.petSize !== undefined && item.petSize !== params.petSize) {
+        return false;
+      }
+
+      if (
+        params.suitableEnvironment !== undefined &&
+        item.suitableEnvironment !== params.suitableEnvironment
+      ) {
+        return false;
+      }
+
+      return true;
+    });
   }
 }

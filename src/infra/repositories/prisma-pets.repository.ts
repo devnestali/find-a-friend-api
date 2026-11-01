@@ -21,7 +21,7 @@ export class PrismaPetsRepository implements PetsRepository {
         energyLevel: PetMapper.energyLevelsToPrisma(pet.energyLevel),
         petSize: PetMapper.petSizeToPrisma(pet.petSize),
         independenceLevel: PetMapper.independenceLevelsToPrisma(
-          pet.independencyLevel,
+          pet.independenceLevel,
         ),
         suitableEnvironment: PetMapper.suitableEnvironmentsToPrisma(
           pet.suitableEnvironment,
