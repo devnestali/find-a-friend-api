@@ -1,13 +1,12 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 
-import { PrismaPetsRepository } from "@/infra/repositories/prisma-pets.repository.js";
+import { makeFetchPetsByFilterController } from "./factories/make-fetch-pets-by-filter-controller.factory.js";
 
 import { EnergyLevels } from "@/domain/adoption/enterprise/entities/enums/pet-energy-levels.js";
 import { PetSize } from "@/domain/adoption/enterprise/entities/enums/pet-size.js";
 import { SuitableEnvironments } from "@/domain/adoption/enterprise/entities/enums/pet-suitable-environments.js";
 import { IndependenceLevels } from "@/domain/adoption/enterprise/entities/enums/pet-independence-levels.js";
-import { FetchPetsByFilterUseCase } from "@/domain/adoption/application/use-cases/fetch-pets-by-filter.js";
 
 export async function listByFilter(
   request: FastifyRequest,
@@ -23,10 +22,7 @@ export async function listByFilter(
 
   const filters = filterQuerySchema.parse(request.query);
 
-  const prismaPetsRepository = new PrismaPetsRepository();
-  const fetchPetsByFilterUseCase = new FetchPetsByFilterUseCase(
-    prismaPetsRepository,
-  );
+  const fetchPetsByFilterUseCase = makeFetchPetsByFilterController();
 
   const result = await fetchPetsByFilterUseCase.execute(filters);
 

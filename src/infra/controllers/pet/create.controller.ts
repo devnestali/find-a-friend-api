@@ -1,9 +1,7 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 
-import { CreatePetUseCase } from "@/domain/adoption/application/use-cases/create-pet.js";
-import { PrismaPetsRepository } from "@/infra/repositories/prisma-pets.repository.js";
-import { PrismaOrganizationsRepository } from "@/infra/repositories/prisma-organizations.repository.js";
+import { makeCreatePetController } from "./factories/make-create-pet-controller.factory.js";
 
 import { PetSize } from "@/domain/adoption/enterprise/entities/enums/pet-size.js";
 import { EnergyLevels } from "@/domain/adoption/enterprise/entities/enums/pet-energy-levels.js";
@@ -39,13 +37,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     photos,
   } = petBodySchema.parse(request.body);
 
-  const prismaOrganizationsRepository = new PrismaOrganizationsRepository();
-  const prismaPetsRepository = new PrismaPetsRepository();
-
-  const createPetUseCase = new CreatePetUseCase(
-    prismaOrganizationsRepository,
-    prismaPetsRepository,
-  );
+  const createPetUseCase = makeCreatePetController();
 
   const { sub } = request.user;
 
