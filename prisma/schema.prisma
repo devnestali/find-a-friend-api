@@ -41,7 +41,7 @@ enum SuitableEnvironments {
 model Organization {
   id                    String    @id
   responsiblePersonName String
-  email                 String
+  email                 String    @unique
   cep                   String
   address               String
   phoneNumber           String
