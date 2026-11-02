@@ -1,8 +1,8 @@
-import { AuthenticateOrganizationUseCase } from "@/domain/adoption/application/use-cases/authenticate-organization.js";
-import { InvalidCredentials } from "@/domain/adoption/application/use-cases/errors/invalid-credentials.js";
-import { PrismaOrganizationsRepository } from "@/infra/repositories/prisma-organizations.repository.js";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
+
+import { InvalidCredentials } from "@/domain/adoption/application/use-cases/errors/invalid-credentials.js";
+import { makeAuthenticateOrganizationController } from "./factories/make-authenticate-organization-controller.factory.js";
 
 export async function authenticate(
   request: FastifyRequest,
@@ -15,10 +15,8 @@ export async function authenticate(
 
   const { email, password } = authenticateBodySchema.parse(request.body);
 
-  const prismaOrganizationsRepository = new PrismaOrganizationsRepository();
-  const authenticateOrganizationUseCase = new AuthenticateOrganizationUseCase(
-    prismaOrganizationsRepository,
-  );
+  const authenticateOrganizationUseCase =
+    makeAuthenticateOrganizationController();
 
   const result = await authenticateOrganizationUseCase.execute({
     email,

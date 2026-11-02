@@ -1,9 +1,10 @@
-import { CreateOrganizationUseCase } from "@/domain/adoption/application/use-cases/create-organization.js";
+import type { FastifyReply, FastifyRequest } from "fastify";
+import { z } from "zod";
+
+import { makeCreateOrganizationController } from "./factories/make-create-organization-controller.factory.js";
+
 import { EmailAlreadyExists } from "@/domain/adoption/application/use-cases/errors/email-already-exists.js";
 import { PasswordDoesNotMatch } from "@/domain/adoption/application/use-cases/errors/password-does-not-match.js";
-import { PrismaOrganizationsRepository } from "@/infra/repositories/prisma-organizations.repository.js";
-import type { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 
 export async function create(request: FastifyRequest, reply: FastifyReply) {
   const createOrganizationBodySchema = z.object({
@@ -34,10 +35,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     });
   }
 
-  const organizationsRepository = new PrismaOrganizationsRepository();
-  const createOrganizationUseCase = new CreateOrganizationUseCase(
-    organizationsRepository,
-  );
+  const createOrganizationUseCase = makeCreateOrganizationController();
 
   const result = await createOrganizationUseCase.execute({
     responsiblePersonName,

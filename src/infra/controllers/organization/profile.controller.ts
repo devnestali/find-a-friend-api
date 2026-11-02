@@ -1,13 +1,10 @@
-import { ResourceNotFound } from "@/domain/adoption/application/use-cases/errors/resource-not-found.js";
-import { GetOrganizationUseCase } from "@/domain/adoption/application/use-cases/get-organization.js";
-import { PrismaOrganizationsRepository } from "@/infra/repositories/prisma-organizations.repository.js";
 import type { FastifyReply, FastifyRequest } from "fastify";
 
+import { makeGetOrganizationController } from "./factories/make-get-organization-controller.factory.js";
+import { ResourceNotFound } from "@/domain/adoption/application/use-cases/errors/resource-not-found.js";
+
 export async function profile(request: FastifyRequest, reply: FastifyReply) {
-  const prismaOrganizationsRepository = new PrismaOrganizationsRepository();
-  const getOrganizationUseCase = new GetOrganizationUseCase(
-    prismaOrganizationsRepository,
-  );
+  const getOrganizationUseCase = makeGetOrganizationController();
 
   const { sub: id } = request.user;
 
