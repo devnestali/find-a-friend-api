@@ -22,4 +22,5 @@ export interface PetsRepository {
   findManyNearby: (params: FindManyNearbyParams) => Promise<Pet[]>;
   findMany: () => Promise<Pet[]>;
   findManyByFilter: (params: FindManyByFilterParams) => Promise<Pet[]>;
+  findById: (id: string) => Promise<Pet | null>;
 }
