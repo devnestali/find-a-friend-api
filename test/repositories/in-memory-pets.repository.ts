@@ -94,4 +94,8 @@ export class InMemoryPetsRepository implements PetsRepository {
       return true;
     });
   }
+
+  async findById(id: string): Promise<Pet | null> {
+    return this.items.find((item) => item.id.toString() === id) ?? null;
+  }
 }
