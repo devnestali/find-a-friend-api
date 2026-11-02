@@ -3,7 +3,7 @@ export interface CoordinateParams {
   longitude: number;
 }
 
-// Comentario: Nesse caso, o "from" será da cidade que eu estou tentando verificar, e o "to" será aonde deveria estar teoricamente esse pet
+// "from" is the city that I'm trying to verify, e o "to" must be where this pet is in a rage of 10 kilometers
 
 export function getDistanceBetweenCoordinates(
   from: CoordinateParams,

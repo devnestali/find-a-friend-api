@@ -16,22 +16,27 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id.js";
 
 export class PetMapper {
   static prismaToDomain(raw: PrismaPet): Pet {
-    return Pet.create({
-      name: raw.name,
-      about: raw.about,
-      organizationId: new UniqueEntityId(raw.organizationId),
-      age: raw.age,
-      latitude: raw.latitude,
-      longitude: raw.longitude,
-      petSize: this.petSizeToEntity(raw.petSize),
-      energyLevel: this.energyLevelsToEntity(raw.energyLevel),
-      independenceLevel: this.independenceLevelsToEntity(raw.independenceLevel),
-      suitableEnvironment: this.suitableEnvironmentsToEntity(
-        raw.suitableEnvironment,
-      ),
-      photos: raw.photos,
-      adoptionRequirements: raw.adoptionRequirements,
-    });
+    return Pet.create(
+      {
+        name: raw.name,
+        about: raw.about,
+        organizationId: new UniqueEntityId(raw.organizationId),
+        age: raw.age,
+        latitude: raw.latitude,
+        longitude: raw.longitude,
+        petSize: this.petSizeToEntity(raw.petSize),
+        energyLevel: this.energyLevelsToEntity(raw.energyLevel),
+        independenceLevel: this.independenceLevelsToEntity(
+          raw.independenceLevel,
+        ),
+        suitableEnvironment: this.suitableEnvironmentsToEntity(
+          raw.suitableEnvironment,
+        ),
+        photos: raw.photos,
+        adoptionRequirements: raw.adoptionRequirements,
+      },
+      new UniqueEntityId(raw.id),
+    );
   }
 
   static petSizeToPrisma(raw: PetSize): PrismaPetSize {

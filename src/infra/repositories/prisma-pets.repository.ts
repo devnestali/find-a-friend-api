@@ -4,9 +4,9 @@ import type {
   PetsRepository,
 } from "@/domain/adoption/application/repositories/pet.repository.js";
 import type { Pet } from "@/domain/adoption/enterprise/entities/pet.js";
+import type { Pet as PrismaPet } from "@/generated/prisma/client.js";
 import { prisma } from "../database/prisma.js";
 import { PetMapper } from "../utils/pet-mapper.js";
-import { getDistanceBetweenCoordinates } from "@/core/utils/get-distance-between-coordinates.js";
 
 export class PrismaPetsRepository implements PetsRepository {
   async create(pet: Pet): Promise<void> {
@@ -34,52 +34,37 @@ export class PrismaPetsRepository implements PetsRepository {
   }
 
   async findManyNearby(params: FindManyNearbyParams): Promise<Pet[]> {
-    const nearbyPets = (await prisma.pet.findMany())
-      .filter((animal) => {
-        const distance = getDistanceBetweenCoordinates(
-          {
-            latitude: params.latitude,
-            longitude: params.longitude,
-          },
-          {
-            latitude: animal.latitude,
-            longitude: animal.longitude,
-          },
-        );
+    const pets = await prisma.$queryRaw<PrismaPet[]>`
+      SELECT *
+          FROM (
+            SELECT
+            p.*,
+            (
+              DEGREES(
+                ACOS(
+                  LEAST(1, GREATEST(-1,
+                    SIN(RADIANS(${params.latitude}::double precision)) *
+                    SIN(RADIANS(p.latitude)) +
+                    COS(RADIANS(${params.latitude}::double precision)) *
+                    COS(RADIANS(p.latitude)) *
+                    COS(RADIANS(
+                      ${params.longitude}::double precision - p.longitude
+                    ))
+                  ))
+                )
+              ) * 60 * 1.1515 * 1.609344
+            ) AS distance
+            FROM "pet" p  
+          ) AS nearby_pets
+          WHERE distance < 10
+          ORDER BY distance ASC
+    `;
 
-        return distance < 10;
-      })
-      .sort((a, b) => {
-        const distance_a = getDistanceBetweenCoordinates(
-          {
-            latitude: params.latitude,
-            longitude: params.longitude,
-          },
-          {
-            latitude: a.latitude,
-            longitude: a.longitude,
-          },
-        );
-
-        const distance_b = getDistanceBetweenCoordinates(
-          {
-            latitude: params.latitude,
-            longitude: params.longitude,
-          },
-          {
-            latitude: b.latitude,
-            longitude: b.longitude,
-          },
-        );
-
-        return distance_a - distance_b;
-      });
-
-    const pets = nearbyPets.map((pet) => {
-      return PetMapper.prismaToDomain(pet);
+    const petsMapper = pets.map((item) => {
+      return PetMapper.prismaToDomain(item);
     });
 
-    return pets;
+    return petsMapper;
   }
 
   async findMany(): Promise<Pet[]> {
