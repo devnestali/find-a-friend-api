@@ -26,6 +26,7 @@ export async function authenticate(
   if (result instanceof InvalidCredentials) {
     return reply.status(401).send({
       message: result.message,
+      error: result.cause,
     });
   }
 

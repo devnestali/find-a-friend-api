@@ -15,6 +15,7 @@ export async function profile(request: FastifyRequest, reply: FastifyReply) {
   if (result instanceof ResourceNotFound) {
     return reply.status(404).send({
       message: result.message,
+      error: result.cause,
     });
   }
 

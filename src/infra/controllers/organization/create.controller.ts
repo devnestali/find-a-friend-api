@@ -32,6 +32,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
 
     return reply.status(400).send({
       message: passwordDoesNotMatch.message,
+      error: passwordDoesNotMatch.cause,
     });
   }
 

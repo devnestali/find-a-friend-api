@@ -22,6 +22,7 @@ export async function listNearby(request: FastifyRequest, reply: FastifyReply) {
   if (result instanceof NotFoundPetsNearby) {
     return reply.status(404).send({
       message: result.message,
+      error: result.cause,
     });
   }
 
