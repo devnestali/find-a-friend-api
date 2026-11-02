@@ -9,7 +9,7 @@ import { FetchPetsByFilterUseCase } from "./fetch-pets-by-filter.js";
 let sut: FetchPetsByFilterUseCase;
 let inMemoryPetsRepository: InMemoryPetsRepository;
 
-describe("Fetch Pets Use Case", () => {
+describe("Fetch Pets by Filter Use Case", () => {
   beforeEach(() => {
     inMemoryPetsRepository = new InMemoryPetsRepository();
     sut = new FetchPetsByFilterUseCase(inMemoryPetsRepository);
