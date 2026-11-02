@@ -108,4 +108,18 @@ export class PrismaPetsRepository implements PetsRepository {
       return PetMapper.prismaToDomain(pet);
     });
   }
+
+  async findById(id: string): Promise<Pet | null> {
+    const pet = await prisma.pet.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    if (!pet) {
+      return null;
+    }
+
+    return PetMapper.prismaToDomain(pet);
+  }
 }
