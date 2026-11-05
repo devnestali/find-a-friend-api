@@ -5,11 +5,30 @@ import { listNearby } from "./list-nearby.controller.js";
 import { list } from "./list.controller.js";
 import { listByFilter } from "./list-by-filter.controller.js";
 import { getPet } from "./get-pet.controller.js";
+import {
+  createPetSchema,
+  listPetsByFilterSchema,
+  listNearbyPetsSchema,
+  listPetsSchema,
+  listPetsByIdSchema,
+} from "@/infra/docs/pet-schemas.js";
 
 export async function petRoutes(app: FastifyInstance) {
-  app.post("/pet", { onRequest: [verifyJWT] }, create);
-  app.get("/pets/nearby", { onRequest: [verifyJWT] }, listNearby);
-  app.get("/pets", { onRequest: [verifyJWT] }, list);
-  app.get("/pets/filter", { onRequest: [verifyJWT] }, listByFilter);
-  app.get("/pet/:id", { onRequest: [verifyJWT] }, getPet);
+  app.post("/pet", { onRequest: [verifyJWT], schema: createPetSchema }, create);
+  app.get(
+    "/pets/nearby",
+    { onRequest: [verifyJWT], schema: listNearbyPetsSchema },
+    listNearby,
+  );
+  app.get("/pets", { onRequest: [verifyJWT], schema: listPetsSchema }, list);
+  app.get(
+    "/pets/filter",
+    { onRequest: [verifyJWT], schema: listPetsByFilterSchema },
+    listByFilter,
+  );
+  app.get(
+    "/pet/:id",
+    { onRequest: [verifyJWT], schema: listPetsByIdSchema },
+    getPet,
+  );
 }

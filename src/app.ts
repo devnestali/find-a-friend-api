@@ -7,6 +7,7 @@ import { organizationRoutes } from "./infra/controllers/organization/organizatio
 import { petRoutes } from "./infra/controllers/pet/pet.routes.js";
 
 import { env } from "./core/env/index.js";
+import { swaggerDocs } from "./infra/plugins/swagger.js";
 
 export const app = fastify();
 
@@ -22,6 +23,8 @@ app.register(fastifyJwt, {
 });
 
 app.register(fastifyCookie);
+
+app.register(swaggerDocs);
 
 app.register(organizationRoutes);
 app.register(petRoutes);
